@@ -1,0 +1,11 @@
+[project]
+name = "consumer-producer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "taskiq>=0.11.17",
+    "taskiq[inmemory]>=0.11.17",
+    "asyncio-mqtt>=0.16.2",
+]
