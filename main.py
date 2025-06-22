@@ -7,14 +7,23 @@ async def demo_concurrent():
     print("🚀 Starting Consumer-Producer Demo with TaskIQ")
     print("=" * 50)
     
-    consumer_task = asyncio.create_task(run_consumer("demo-worker", max_tasks=8))
+    consumer_task = asyncio.create_task(run_consumer("demo-worker"))
     
     await asyncio.sleep(1)
     
     producer_task = asyncio.create_task(run_producer())
     
     await producer_task
-    await consumer_task
+    
+    print("⏳ Allowing time for consumer to process remaining tasks...")
+    await asyncio.sleep(3)
+    
+    print("🛑 Stopping consumer...")
+    consumer_task.cancel()
+    try:
+        await consumer_task
+    except asyncio.CancelledError:
+        print("✅ Consumer stopped gracefully")
     
     print("\n🎯 Demo completed!")
 

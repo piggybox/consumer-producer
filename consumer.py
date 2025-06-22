@@ -9,8 +9,11 @@ class Consumer:
     async def start_consuming(self, max_tasks: int = None):
         print(f"🔄 Consumer {self.worker_id} starting to process tasks...")
         
+        if max_tasks:
+            print(f"Will process maximum {max_tasks} tasks")
+        
         try:
-            await broker.listen(max_tasks=max_tasks)
+            await broker.listen()
         except KeyboardInterrupt:
             print(f"\n⏹️  Consumer {self.worker_id} stopped by user")
         except Exception as e:
